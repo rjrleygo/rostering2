@@ -1,6 +1,6 @@
 package employee;
 
-import mySimpleGA.Constants.Assignment;
+import mySimpleGA.Constants.Shift;
 
 public class Pool {
 	private static Pool instance;
@@ -17,15 +17,15 @@ public class Pool {
 	private Pool() {
 		this.employees = new Employee[1];
 		final Employee employee = new Employee("Employee1", 1);
-		employee.setAssignment(5, Assignment.DO);
-		employee.setAssignment(6, Assignment.DO);
+		employee.setShift(5, Shift.DO);
+		employee.setShift(6, Shift.DO);
 		this.employees[0] = employee;
 	}
 
-	public String getHardConditionsFromAssignments() {
+	public String getHardConditionsFromShifts() {
 		final StringBuffer solution = new StringBuffer();
 		for (final Employee employee : this.employees) {
-			solution.append(employee.getAssignmentGenes());
+			solution.append(employee.getShiftGenes());
 		}
 		return solution.toString();
 	}

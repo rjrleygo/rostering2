@@ -1,17 +1,17 @@
 package employee;
 
-import mySimpleGA.Constants.Assignment;
+import mySimpleGA.Constants.Shift;
 
 public class Employee {
 	private final String name;
 	private final double fte;
-	private final Assignment[] assignments;
+	private final Shift[] shifts;
 	public Employee(String name, double fte) {
 		this.name = name;
 		this.fte = fte;
-		this.assignments = new Assignment[7];
-		for (int i = 0; i < this.assignments.length; i++) {
-			this.assignments[i] = null;
+		this.shifts = new Shift[7];
+		for (int i = 0; i < this.shifts.length; i++) {
+			this.shifts[i] = null;
 		}
 	}
 
@@ -23,21 +23,21 @@ public class Employee {
 		return this.fte;
 	}
 
-	public void setAssignment(int i, Assignment assignment) {
-		this.assignments[i] = assignment;
+	public void setShift(int i, Shift shift) {
+		this.shifts[i] = shift;
 	}
 
-	public Assignment[] getAssignments() {
-		return this.assignments;
+	public Shift[] getShifts() {
+		return this.shifts;
 	}
 
-	public String getAssignmentGenes() {
+	public String getShiftGenes() {
 		final StringBuffer buf = new StringBuffer();
-		for (final Assignment assignment : this.assignments) {
-			if (assignment == null) {
+		for (final Shift shift : this.shifts) {
+			if (shift == null) {
 				buf.append("????");
 			} else {
-				buf.append(assignment.getGenes());
+				buf.append(shift.getGenes());
 			}
 		}
 		return buf.toString();

@@ -1,55 +1,112 @@
 package mySimpleGA;
 
+import employee.Pool;
+
 public class Population {
 
-	Individual[] individuals;
-	private final int geneSize;
+	private final Chromosome[] chromosomes;
 	/*
 	 * Constructors
 	 */
 	// Create a population
-	public Population(int populationSize, int geneSize, boolean initialise) {
-		this.geneSize = geneSize;
-		this.individuals = new Individual[populationSize];
+	public Population(int size) {
+		this.chromosomes = new Chromosome[size];
+	}
+
+	public Population(int size, Pool pool) {
+		this(size);
 		// Initialise population
-		if (initialise) {
-			// Loop and create individuals
-			for (int i = 0; i < this.size(); i++) {
-				final Individual newIndividual = new Individual(geneSize);
-				newIndividual.generateIndividual();
-				this.saveIndividual(i, newIndividual);
-			}
+		// Loop and create chromosomes
+		for (int i = 0; i < this.size(); i++) {
+			final Chromosome chromosome = Chromosome.Factory.generate(pool.getHardConditionsFromShifts().length());
+			this.save(i, chromosome);
 		}
 	}
 
 	/* Getters */
-	public Individual getIndividual(int index) {
-		return this.individuals[index];
+	public Chromosome getChromosome(int index) {
+		return this.chromosomes[index];
 	}
 
-	public Individual getFittest() {
-		Individual fittest = this.individuals[0];
-		// Loop through individuals to find fittest
-		for (int i = 0; i < this.size(); i++) {
-			if (fittest.getFitness() <= this.getIndividual(i).getFitness()) {
-				fittest = this.getIndividual(i);
+	public Chromosome getFittest() {
+		Chromosome fittest = this.chromosomes[0];
+		// Loop through chromosomes to find fittest
+		for (final Chromosome chromosome : this.chromosomes) {
+			if (fittest.getFitness() <= chromosome.getFitness()) {
+				fittest = chromosome;
 			}
 		}
 		return fittest;
 	}
 
 	/* Public methods */
+	public Population evolve() {
+		final Population newPopulation = new Population(this.size());
+
+		// Keep our best chromosome
+		if (Constants.ELITISM) {
+			newPopulation.save(0, this.getFittest());
+		}
+
+		// Crossover population
+		int elitismOffset;
+		if (Constants.ELITISM) {
+			elitismOffset = 1;
+		} else {
+			elitismOffset = 0;
+		}
+		// Loop over the population size and create new chromosomes with crossover
+		for (int i = elitismOffset; i < this.size(); i++) {
+			final Chromosome fittest1 = this.runTournament();
+			final Chromosome fittest2 = this.runTournament();
+			final Chromosome newChromosome = this.crossover(fittest1, fittest2);
+			newPopulation.save(i, newChromosome);
+		}
+
+		// Mutate population
+		for (int i = elitismOffset; i < newPopulation.size(); i++) {
+			newPopulation.getChromosome(i).mutate();
+		}
+
+		return newPopulation;
+	}
+
+	// Crossover chromosomes
+	protected Chromosome crossover(Chromosome chromosome1, Chromosome chromosome2) {
+		final Chromosome newChromosome = Chromosome.Factory.generate(chromosome1.size());
+		// Loop through genes
+		for (int i = 0; i < chromosome1.size(); i++) {
+			// Crossover
+			if (Math.random() <= Constants.DEFAULT_UNIFORM_RATE) {
+				newChromosome.setGene(i, chromosome1.getGene(i));
+			} else {
+				newChromosome.setGene(i, chromosome2.getGene(i));
+			}
+		}
+		return newChromosome;
+	}
+
+	// Select chromosomes for crossover
+	protected Chromosome runTournament() {
+		// Create a tournament population
+		final Population tournament = new Population(Constants.DEFAULT_TOURNAMENT_SIZE);
+		// For each place in the tournament get a random chromosome
+		for (int i = 0; i < Constants.DEFAULT_TOURNAMENT_SIZE; i++) {
+			final int randomId = (int) (Math.random() * this.size());
+			tournament.save(i, this.getChromosome(randomId));
+		}
+		// Get the fittest
+		final Chromosome fittest = tournament.getFittest();
+		return fittest;
+	}
+
 	// Get population size
 	public int size() {
-		return this.individuals.length;
+		return this.chromosomes.length;
 	}
 
-	public int getGeneSize() {
-		return this.geneSize;
-	}
-
-	// Save individual
-	public void saveIndividual(int index, Individual indiv) {
-		this.individuals[index] = indiv;
+	// Save chromosome
+	public void save(int index, Chromosome chromosome) {
+		this.chromosomes[index] = chromosome;
 	}
 }

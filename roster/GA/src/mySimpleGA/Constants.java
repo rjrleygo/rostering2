@@ -4,7 +4,11 @@ public class Constants {
 	public static final int DEFAULT_POPULATION_SIZE = 10;
 	public static final int DEFAULT_TOURNAMENT_SIZE = 5;
 
-	public enum Assignment {
+	public static final double DEFAULT_UNIFORM_RATE = 0.5;
+	public static final double DEFAULT_MUTATION_RATE = 0.015;
+	public static final boolean ELITISM = true;
+
+	public enum Shift {
 		M8 ("0000", "Morning 8"),
 		A8 ("0001", "Afternoon 8"),
 		N8 ("0010", "Night 8"),
@@ -21,20 +25,15 @@ public class Constants {
 		Z6 ("1101", "Unassigned6"),
 		Z7 ("1110", "Unassigned7"),
 		DO ("1111", "Day Off");
-		private Assignment(String genes, String desc) {
-			//			this.gene = new byte[4];
-			//			for (int i = 0; i < gene.length(); i++) {
-			//				this.gene[i] = (byte) (gene.charAt(i) - '0');
-			//			}
+
+		private Shift(String genes, String desc) {
 			this.genes = genes;
 			this.desc = desc;
 		}
-		//private final byte[] gene;
+
 		private final String genes;
 		private final String desc;
-		//		public byte[] getGene() {
-		//			return this.gene;
-		//		}
+
 		public String getGenes() {
 			return this.genes;
 		}
