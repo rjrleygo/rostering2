@@ -1,0 +1,29 @@
+Source for GA: http://www.theprojectspot.com/tutorial-post/creating-a-genetic-algorithm-for-beginners/3
+
+0000	M8 Morning
+0001	A8 Afternoon
+0010	N8 Night
+0011	D12
+0100	N12
+0101	SD Study Day
+0110	AL Annual Leave
+0111	R  Request Day? Rest Day?
+1000	OFF ??
+1001	TB?
+1010	STIL?
+1011	<BLANK>?
+1100	AM?
+1101	PM?
+1110	?
+1111	Day Off
+
+Questions:
+Differences between <BLANK>, R, OFF, TB, STIL?
+Include HCA, EN4?
+
+28 = bits per week per employee, i.e. 7 days x 4 bits per day
+40 = estimated number of employees in the ward
+30 = estimated number of nurses excluding CN and EDU
+6  = number of weeks
+6720 = probably max length of genes required (28 bits per week per employee x 40 employees x 6 weeks)
+5040 = estimate for nurses only
