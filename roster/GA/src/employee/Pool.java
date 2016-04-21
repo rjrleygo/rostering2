@@ -1,8 +1,9 @@
 package employee;
 
 import mySimpleGA.Constants.Shift;
+import mySimpleGA.IProblem;
 
-public class Pool {
+public class Pool implements IProblem {
 	private static Pool instance;
 
 	public static Pool getInstance() {
@@ -22,7 +23,8 @@ public class Pool {
 		this.employees[0] = employee;
 	}
 
-	public String getHardConditionsFromShifts() {
+	@Override
+	public String getHardConditions() {
 		final StringBuffer solution = new StringBuffer();
 		for (final Employee employee : this.employees) {
 			solution.append(employee.getShiftGenes());

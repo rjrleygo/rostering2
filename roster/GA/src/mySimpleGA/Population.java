@@ -18,7 +18,7 @@ public class Population {
 		// Initialise population
 		// Loop and create chromosomes
 		for (int i = 0; i < this.size(); i++) {
-			final Chromosome chromosome = Chromosome.Factory.generate(pool.getHardConditionsFromShifts().length());
+			final Chromosome chromosome = Chromosome.Factory.generate(pool.getHardConditions().length());
 			this.save(i, chromosome);
 		}
 	}
