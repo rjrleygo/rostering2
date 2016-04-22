@@ -1,6 +1,6 @@
 package mySimpleGA;
 
-import employee.Pool;
+import employee.Staff;
 
 public class GA {
 
@@ -9,12 +9,11 @@ public class GA {
 		// Set a candidate solution
 		// final String solution = "1111000011110000111100001111";
 
-		final IProblem problem = Pool.getInstance();
-		final FitnessCalculator fitnessFunction = new FitnessCalculator(problem);
+		final FitnessCalculator fitnessFunction = new FitnessCalculator(Staff.getInstance());
 		// FitnessCalculator.setSolution(Pool.getInstance());
 
 		// Create an initial population
-		Population population = new Population(Constants.DEFAULT_POPULATION_SIZE, Pool.getInstance());
+		Population population = new Population(Constants.DEFAULT_POPULATION_SIZE, Staff.getInstance());
 
 		// Evolve our population until we reach an optimum solution
 		int generationCount = 0;
@@ -27,7 +26,7 @@ public class GA {
 		System.out.println("Solution found!");
 		System.out.println("Generation: " + generationCount);
 		System.out.println("Genes:");
-		System.out.println("Ideal: " + Pool.getInstance().getHardConditions().toString());
+		System.out.println("Ideal: " + Staff.getInstance().getSolutionGuide().toString());
 		System.out.println("Solution: " + population.getFittest());
 
 	}

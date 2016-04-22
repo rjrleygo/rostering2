@@ -7,6 +7,8 @@ public class Constants {
 	public static final double DEFAULT_UNIFORM_RATE = 0.5;
 	public static final double DEFAULT_MUTATION_RATE = 0.015;
 	public static final boolean ELITISM = true;
+	
+	public static final int DEFAULT_SHIFT_CODE_LENGTH = 4;
 
 	public enum Shift {
 		M8 ("0000", "Morning 8"),
@@ -24,18 +26,19 @@ public class Constants {
 		Z5 ("1100", "Unassigned5"),
 		Z6 ("1101", "Unassigned6"),
 		Z7 ("1110", "Unassigned7"),
-		DO ("1111", "Day Off");
+		DO ("1111", "Day Off"),
+		UNKNOWN("????", "Unknown");
 
-		private Shift(String genes, String desc) {
-			this.genes = genes;
+		private Shift(String code, String desc) {
+			this.code = code;
 			this.desc = desc;
 		}
 
-		private final String genes;
+		private final String code;
 		private final String desc;
 
-		public String getGenes() {
-			return this.genes;
+		public String getCode() {
+			return this.code;
 		}
 
 		public String getDesc() {

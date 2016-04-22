@@ -1,5 +1,7 @@
 package mySimpleGA;
 
+import employee.Staff;
+
 public class Chromosome {
 	public static class Factory {
 		public static Chromosome generate(int size) {
@@ -10,7 +12,29 @@ public class Chromosome {
 			}
 			return chromosome;
 		}
+
+		// public static Chromosome generate(String solutionGuide) {
+		// if (solutionGuide.length() % Constants.DEFAULT_SHIFT_CODE_LENGTH !=
+		// 0) {
+		// throw new RuntimeException("Solution guide is not divisible by " +
+		// Constants.DEFAULT_SHIFT_CODE_LENGTH);
+		// }
+		//
+		// final int index = 0;
+		// while (index < solutionGuide.length()) {
+		// final String s = solutionGuide.substring(index, index +
+		// Constants.DEFAULT_SHIFT_CODE_LENGTH);
+		// if (s.contains('?'))
+		// }
+		// final Chromosome chromosome = new Chromosome(solutionGuide.length());
+		// for (int i = 0; i < chromosome.genes.length; i++) {
+		// final byte gene = (byte) Math.round(Math.random());
+		// chromosome.genes[i] = gene;
+		// }
+		// return chromosome;
+		// }
 	}
+
 	private final byte[] genes;
 
 	private Chromosome(int size) {
@@ -35,7 +59,8 @@ public class Chromosome {
 
 	public int getFitness() {
 		if (this.fitness == 0) {
-			this.fitness = FitnessCalculator.getFitness(this);
+			final FitnessCalculator fitnessFunction = new FitnessCalculator(Staff.getInstance());
+			this.fitness = fitnessFunction.getFitness(this);
 		}
 		return this.fitness;
 	}

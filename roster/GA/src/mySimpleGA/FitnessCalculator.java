@@ -1,9 +1,11 @@
 package mySimpleGA;
 
+import employee.Staff;
+
 public class FitnessCalculator {
 
-	public FitnessCalculator(IProblem problem) {
-		final String hardConditions = problem.getHardConditions();
+	public FitnessCalculator(Staff staff) {
+		final String hardConditions = staff.getSolutionGuide();
 		this.solution = new byte[hardConditions.length()];
 		for (int i = 0; i < hardConditions.length(); i++) {
 			final String character = hardConditions.substring(i, i + 1);

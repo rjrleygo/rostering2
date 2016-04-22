@@ -1,21 +1,20 @@
 package employee;
 
 import mySimpleGA.Constants.Shift;
-import mySimpleGA.IProblem;
 
-public class Pool implements IProblem {
-	private static Pool instance;
+public class Staff {
+	private static Staff instance;
 
-	public static Pool getInstance() {
+	public static Staff getInstance() {
 		if (instance == null) {
-			instance = new Pool();
+			instance = new Staff();
 		}
 		return instance;
 	}
 
 	private final Employee[] employees;
 
-	private Pool() {
+	private Staff() {
 		this.employees = new Employee[1];
 		final Employee employee = new Employee("Employee1", 1);
 		employee.setShift(5, Shift.DO);
@@ -23,12 +22,11 @@ public class Pool implements IProblem {
 		this.employees[0] = employee;
 	}
 
-	@Override
-	public String getHardConditions() {
-		final StringBuffer solution = new StringBuffer();
+	public String getSolutionGuide() {
+		final StringBuffer guide = new StringBuffer();
 		for (final Employee employee : this.employees) {
-			solution.append(employee.getShiftGenes());
+			guide.append(employee.getShiftGuide());
 		}
-		return solution.toString();
+		return guide.toString();
 	}
 }

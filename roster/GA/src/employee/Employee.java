@@ -6,12 +6,13 @@ public class Employee {
 	private final String name;
 	private final double fte;
 	private final Shift[] shifts;
+
 	public Employee(String name, double fte) {
 		this.name = name;
 		this.fte = fte;
 		this.shifts = new Shift[7];
 		for (int i = 0; i < this.shifts.length; i++) {
-			this.shifts[i] = null;
+			this.shifts[i] = Shift.UNKNOWN;
 		}
 	}
 
@@ -31,14 +32,14 @@ public class Employee {
 		return this.shifts;
 	}
 
-	public String getShiftGenes() {
+	public String getShiftGuide() {
 		final StringBuffer buf = new StringBuffer();
 		for (final Shift shift : this.shifts) {
-			if (shift == null) {
-				buf.append("????");
-			} else {
-				buf.append(shift.getGenes());
-			}
+			// if (shift == null) {
+			// buf.append("????");
+			// } else {
+			buf.append(shift.getCode());
+			// }
 		}
 		return buf.toString();
 	}

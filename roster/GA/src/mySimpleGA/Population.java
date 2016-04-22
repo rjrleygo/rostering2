@@ -1,24 +1,31 @@
 package mySimpleGA;
 
-import employee.Pool;
+import employee.Staff;
 
 public class Population {
 
 	private final Chromosome[] chromosomes;
+	private final Staff staff;
+	private final String solutionGuide;
+
 	/*
 	 * Constructors
 	 */
 	// Create a population
-	public Population(int size) {
-		this.chromosomes = new Chromosome[size];
-	}
+	// public Population(int size) {
+	// this.chromosomes = new Chromosome[size];
+	// }
 
-	public Population(int size, Pool pool) {
-		this(size);
+	public Population(int size, Staff staff) {
+		// this(size);
+		this.chromosomes = new Chromosome[size];
+		this.staff = staff;
+		this.solutionGuide = staff.getSolutionGuide();
+
 		// Initialise population
 		// Loop and create chromosomes
 		for (int i = 0; i < this.size(); i++) {
-			final Chromosome chromosome = Chromosome.Factory.generate(pool.getHardConditions().length());
+			final Chromosome chromosome = Chromosome.Factory.generate(this.solutionGuide.length());
 			this.save(i, chromosome);
 		}
 	}
@@ -41,7 +48,7 @@ public class Population {
 
 	/* Public methods */
 	public Population evolve() {
-		final Population newPopulation = new Population(this.size());
+		final Population newPopulation = new Population(this.size(), this.staff);
 
 		// Keep our best chromosome
 		if (Constants.ELITISM) {
@@ -55,7 +62,8 @@ public class Population {
 		} else {
 			elitismOffset = 0;
 		}
-		// Loop over the population size and create new chromosomes with crossover
+		// Loop over the population size and create new chromosomes with
+		// crossover
 		for (int i = elitismOffset; i < this.size(); i++) {
 			final Chromosome fittest1 = this.runTournament();
 			final Chromosome fittest2 = this.runTournament();
@@ -73,7 +81,7 @@ public class Population {
 
 	// Crossover chromosomes
 	protected Chromosome crossover(Chromosome chromosome1, Chromosome chromosome2) {
-		final Chromosome newChromosome = Chromosome.Factory.generate(chromosome1.size());
+		final Chromosome newChromosome = Chromosome.Factory.generate(this.solutionGuide.length());
 		// Loop through genes
 		for (int i = 0; i < chromosome1.size(); i++) {
 			// Crossover
@@ -89,11 +97,11 @@ public class Population {
 	// Select chromosomes for crossover
 	protected Chromosome runTournament() {
 		// Create a tournament population
-		final Population tournament = new Population(Constants.DEFAULT_TOURNAMENT_SIZE);
+		final Population tournament = new Population(Constants.DEFAULT_TOURNAMENT_SIZE, this.staff);
 		// For each place in the tournament get a random chromosome
 		for (int i = 0; i < Constants.DEFAULT_TOURNAMENT_SIZE; i++) {
-			final int randomId = (int) (Math.random() * this.size());
-			tournament.save(i, this.getChromosome(randomId));
+			final int randomID = (int) (Math.random() * this.size());
+			tournament.save(i, this.getChromosome(randomID));
 		}
 		// Get the fittest
 		final Chromosome fittest = tournament.getFittest();
