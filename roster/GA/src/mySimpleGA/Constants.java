@@ -7,7 +7,7 @@ public class Constants {
 	public static final double DEFAULT_UNIFORM_RATE = 0.5;
 	public static final double DEFAULT_MUTATION_RATE = 0.015;
 	public static final boolean ELITISM = true;
-	
+
 	public static final int DEFAULT_SHIFT_CODE_LENGTH = 4;
 
 	public enum Shift {
@@ -43,6 +43,15 @@ public class Constants {
 
 		public String getDesc() {
 			return this.desc;
+		}
+
+		public static Shift getByCode(String code) {
+			for (final Shift shift : Shift.values()) {
+				if (shift.getCode().equals(code)) {
+					return shift;
+				}
+			}
+			return null;
 		}
 	}
 }

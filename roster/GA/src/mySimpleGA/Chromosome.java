@@ -1,6 +1,7 @@
 package mySimpleGA;
 
 import employee.Staff;
+import mySimpleGA.Constants.Shift;
 
 public class Chromosome {
 	public static class Factory {
@@ -13,26 +14,32 @@ public class Chromosome {
 			return chromosome;
 		}
 
-		// public static Chromosome generate(String solutionGuide) {
-		// if (solutionGuide.length() % Constants.DEFAULT_SHIFT_CODE_LENGTH !=
-		// 0) {
-		// throw new RuntimeException("Solution guide is not divisible by " +
-		// Constants.DEFAULT_SHIFT_CODE_LENGTH);
-		// }
-		//
-		// final int index = 0;
-		// while (index < solutionGuide.length()) {
-		// final String s = solutionGuide.substring(index, index +
-		// Constants.DEFAULT_SHIFT_CODE_LENGTH);
-		// if (s.contains('?'))
-		// }
-		// final Chromosome chromosome = new Chromosome(solutionGuide.length());
-		// for (int i = 0; i < chromosome.genes.length; i++) {
-		// final byte gene = (byte) Math.round(Math.random());
-		// chromosome.genes[i] = gene;
-		// }
-		// return chromosome;
-		// }
+		public static Chromosome generate(String solutionGuide) {
+			if (solutionGuide.length() % Constants.DEFAULT_SHIFT_CODE_LENGTH !=
+					0) {
+				throw new RuntimeException("Solution guide is not divisible by " + Constants.DEFAULT_SHIFT_CODE_LENGTH);
+			}
+
+			final int index = 0;
+			while (index < solutionGuide.length()) {
+				final String code = solutionGuide.substring(index, index + Constants.DEFAULT_SHIFT_CODE_LENGTH);
+				final Shift shift = Shift.getByCode(code);
+				if (shift == null) {
+					throw new RuntimeException("Unable to identify shift for code: " + code);
+				}
+				if (shift.UNKNOWN.equals(shift)) {
+
+				} else {
+
+				}
+			}
+			final Chromosome chromosome = new Chromosome(solutionGuide.length());
+			for (int i = 0; i < chromosome.genes.length; i++) {
+				final byte gene = (byte) Math.round(Math.random());
+				chromosome.genes[i] = gene;
+			}
+			return chromosome;
+		}
 	}
 
 	private final byte[] genes;
