@@ -25,7 +25,7 @@ public class Population {
 		// Initialise population
 		// Loop and create chromosomes
 		for (int i = 0; i < this.size(); i++) {
-			final Chromosome chromosome = Chromosome.Factory.generate(this.solutionGuide.length());
+			final Chromosome chromosome = Chromosome.Factory.generate(this.solutionGuide);
 			this.save(i, chromosome);
 		}
 	}
@@ -81,7 +81,7 @@ public class Population {
 
 	// Crossover chromosomes
 	protected Chromosome crossover(Chromosome chromosome1, Chromosome chromosome2) {
-		final Chromosome newChromosome = Chromosome.Factory.generate(this.solutionGuide.length());
+		final Chromosome newChromosome = Chromosome.Factory.generate(this.solutionGuide);
 		// Loop through genes
 		for (int i = 0; i < chromosome1.size(); i++) {
 			// Crossover

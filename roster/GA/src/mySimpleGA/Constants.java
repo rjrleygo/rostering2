@@ -1,5 +1,7 @@
 package mySimpleGA;
 
+import java.util.Random;
+
 public class Constants {
 	public static final int DEFAULT_POPULATION_SIZE = 10;
 	public static final int DEFAULT_TOURNAMENT_SIZE = 5;
@@ -52,6 +54,11 @@ public class Constants {
 				}
 			}
 			return null;
+		}
+		public static Shift getRandomShift() {
+			// minus 1 to exclude UNKNOWN
+			final int index = new Random().nextInt(Shift.values().length - 1);
+			return Shift.values()[index];
 		}
 	}
 }
