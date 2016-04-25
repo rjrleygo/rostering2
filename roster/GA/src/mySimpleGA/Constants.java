@@ -12,6 +12,8 @@ public class Constants {
 
 	public static final int DEFAULT_SHIFT_CODE_LENGTH = 4;
 
+	public static final int DEFAULT_FITNESS = Integer.MAX_VALUE;
+
 	public enum Shift {
 		M8 ("0000", "Morning 8"),
 		A8 ("0001", "Afternoon 8"),

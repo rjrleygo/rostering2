@@ -15,8 +15,7 @@ public class Chromosome {
 		}
 
 		public static Chromosome generate(String solutionGuide) {
-			if ((solutionGuide.length() % Constants.DEFAULT_SHIFT_CODE_LENGTH) !=
-					0) {
+			if ((solutionGuide.length() % Constants.DEFAULT_SHIFT_CODE_LENGTH) != 0) {
 				throw new RuntimeException("Solution guide is not divisible by " + Constants.DEFAULT_SHIFT_CODE_LENGTH);
 			}
 
@@ -37,7 +36,7 @@ public class Chromosome {
 			}
 
 			final Chromosome chromosome = new Chromosome(solutionGuide.length());
-			byte[] array = Utilities.toByteArray(buf.toString());
+			final byte[] array = Utilities.toByteArray(buf.toString());
 			for (int i = 0; i < array.length; i++) {
 				chromosome.genes[i] = array[i];
 			}
@@ -55,7 +54,12 @@ public class Chromosome {
 		this.genes = new byte[size];
 	}
 
-	private int fitness = 0;
+	private int fitness = Constants.DEFAULT_FITNESS;
+
+
+	public byte[] getGenes() {
+		return this.genes;
+	}
 
 	public byte getGene(int index) {
 		return this.genes[index];
@@ -63,7 +67,7 @@ public class Chromosome {
 
 	public void setGene(int index, byte value) {
 		this.genes[index] = value;
-		this.fitness = 0;
+		this.fitness = Constants.DEFAULT_FITNESS;
 	}
 
 	/* Public methods */
@@ -72,7 +76,7 @@ public class Chromosome {
 	}
 
 	public int getFitness() {
-		if (this.fitness == 0) {
+		if (this.fitness == Constants.DEFAULT_FITNESS) {
 			final FitnessCalculator fitnessFunction = new FitnessCalculator(Staff.getInstance());
 			this.fitness = fitnessFunction.getFitness(this);
 		}

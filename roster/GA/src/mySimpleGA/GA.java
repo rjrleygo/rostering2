@@ -17,7 +17,7 @@ public class GA {
 
 		// Evolve our population until we reach an optimum solution
 		int generationCount = 0;
-		while (population.getFittest().getFitness() < fitnessFunction.getMaxFitness()) {
+		while (population.getFittest().getFitness() < fitnessFunction.getAcceptableFitness()) {
 			generationCount++;
 			System.out.println("Generation: " + generationCount + " Fittest: " + population.getFittest().getFitness()
 					+ ": " + population.getFittest());
