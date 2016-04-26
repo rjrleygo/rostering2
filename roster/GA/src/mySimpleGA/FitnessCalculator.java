@@ -29,21 +29,25 @@ public class FitnessCalculator {
 
 	// Calculate inidividuals fitness by comparing it to our candidate solution
 	public int getFitness(Chromosome chromosome) {
-		final int fitness = 0;
+		int fitness = 0;
 		//		// Loop through our individuals genes and compare them to our cadidates
 		//		for (int i = 0; (i < chromosome.size()) && (i < this.solutionGuide.length); i++) {
 		//			if ((chromosome.getGene(i) == this.solutionGuide[i]) || (this.solutionGuide[i] == -1)) {
 		//				fitness++;
 		//			}
 		//		}
-		// TODO: calculate fitness using shift from guide and generated shift
 		int index = 0;
 		while (index < this.solutionGuide.length()) {
-			final Shift shift = Shift.getByCode(this.solutionGuide.substring(index, index + Constants.DEFAULT_SHIFT_CODE_LENGTH));
-			if (shift == null) {
+			final Shift guide = Shift.getByCode(this.solutionGuide.substring(index, index + Constants.DEFAULT_SHIFT_CODE_LENGTH));
+			if (guide == null) {
 				throw new RuntimeException("Unable to identify shift for code: " + this.solutionGuide.substring(index, index + Constants.DEFAULT_SHIFT_CODE_LENGTH));
 			} else {
-				Arrays.copyOfRange(chromosome.getGenes(), index, (index + Constants.DEFAULT_SHIFT_CODE_LENGTH) - 1);
+				final Shift generated = Shift.getByCode(Arrays.copyOfRange(chromosome.getGenes(), index, (index + Constants.DEFAULT_SHIFT_CODE_LENGTH)));
+				if (Shift.UNKNOWN.equals(guide)) {
+
+				} else if (guide.equals(generated) == false){
+					fitness++;
+				}
 			}
 			index += Constants.DEFAULT_SHIFT_CODE_LENGTH;
 		}

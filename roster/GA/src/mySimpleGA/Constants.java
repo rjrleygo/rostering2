@@ -57,6 +57,20 @@ public class Constants {
 			}
 			return null;
 		}
+
+		public static Shift getByCode(byte[] array) {
+			if (DEFAULT_SHIFT_CODE_LENGTH != array.length) {
+				throw new RuntimeException("Unexpected length");
+			}
+
+			String s = "";
+			for (final byte b : array) {
+				s += String.valueOf(b);
+			}
+
+			return getByCode(s);
+		}
+
 		public static Shift getRandomShift() {
 			// minus 1 to exclude UNKNOWN
 			final int index = new Random().nextInt(Shift.values().length - 1);
